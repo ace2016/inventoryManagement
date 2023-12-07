@@ -1,0 +1,138 @@
+{% extends "../base.html" %} 
+{% block content %} 
+{% load static %}
+
+<div class="content-section">
+  <div class="row mx-auto justify-content-center">
+    <!--- Card Details -->
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Product Code</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-list-ol" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.product_code}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Product Name</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fab fa-product-hunt"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.name}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Quantity In Stock</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.quantity_in_stock}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Cost of {{inventory.name}}</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-money-bill" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.cost_per_item}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Quantity Sold</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-cart-plus" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.quantity_sold}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Total Revenue/Sales Made for {{inventory.name}}</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-database" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.sales}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Date Stocked</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.stock_date}}</h3>
+      </div>
+    </div>
+
+    <div class="card m-4" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="cart-title text-center">Last Sales Date</h5>
+        <div style="font-size: 30px" class="text-center">
+          <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+        </div>
+        <h3 class="text-center">{{inventory.last_sales_date}}</h3>
+      </div>
+    </div>
+
+
+    
+
+    <div class="form-group pt-4 text-center">
+      <a class="btn btn-outline-info btn-sm" href="{% url 'update_inventory' inventory.product_code %}">Update Product</a>
+
+      <button class="btn btn-danger btn-sm delete_inventory" id="{{inventory.product_code}}">Delete Product</button>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+	document.querySelector('.delete_inventory').addEventListener(
+		'click', (event) => {
+			event.preventDefault()
+			console.log(event.target)
+
+			Swal.fire({
+				title: "Are you sure delete?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, delete it!"
+			  }).then((result) => {
+				if (result.isConfirmed) {
+				  Swal.fire({
+					title: "Deleted!",
+					text: "Your product has been deleted.",
+					icon: "success"
+				  });
+				  window.location.href = `/inventory/delete/${event.target.id}`
+				} else {
+					Swal.fire({
+						title: "Canceled!",
+						text: "Your action was terminated.",
+						icon: "info"
+					  });
+				}
+			  }); 
+
+		}
+	)
+  
+</script>
+
+{% endblock content %}
+
